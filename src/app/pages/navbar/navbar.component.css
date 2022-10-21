@@ -1,0 +1,6 @@
+.nav-link.nav-item{
+  color: silver !important;
+}
+.nav-link.nav-item.active{
+  color: black !important;
+}

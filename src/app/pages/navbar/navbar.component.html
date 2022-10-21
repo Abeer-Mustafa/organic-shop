@@ -1,0 +1,41 @@
+<nav ngbNav #nav="ngbNav" [(activeId)]="active" class="navbar navbar-expand-lg bg-light">
+	<ng-container [ngbNavItem]="1">
+		<a ngbNavLink>Shopping Cart</a>
+		<ng-template ngbNavContent>
+			<app-shopping-cart></app-shopping-cart>
+		</ng-template>
+	</ng-container>
+
+  <div class="row">
+    <div class="col">
+      <div ngbDropdown class="d-inline-block">
+        <button type="button" class="btn btn-outline-primary" id="dropdownBasic1" ngbDropdownToggle>
+          username
+        </button>
+        <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
+          <button ngbDropdownItem>My Orders</button>
+          <button ngbDropdownItem>Manage Orders</button>
+          <button ngbDropdownItem>Manage Products</button>
+          <button ngbDropdownItem>Log out</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+	<ng-container [ngbNavItem]="3">
+		<a ngbNavLink>Three</a>
+		<ng-template ngbNavContent>
+			<p>
+				Sed commodo, leo at suscipit dictum, quam est porttitor sapien, eget sodales nibh elit id diam. Nulla facilisi.
+				Donec egestas ligula vitae odio interdum aliquet. Duis lectus turpis, luctus eget tincidunt eu, congue et odio.
+				Duis pharetra et nisl at faucibus. Quisque luctus pulvinar arcu, et molestie lectus ultrices et. Sed diam urna,
+				egestas ut ipsum vel, volutpat volutpat neque. Praesent fringilla tortor arcu. Vivamus faucibus nisl enim, nec
+				tristique ipsum euismod facilisis. Morbi ut bibendum est, eu tincidunt odio. Orci varius natoque penatibus et
+				magnis dis parturient montes, nascetur ridiculus mus. Mauris aliquet odio ac lorem aliquet ultricies in eget
+				neque. Phasellus nec tortor vel tellus pulvinar feugiat.
+			</p>
+		</ng-template>
+	</ng-container>
+</nav>
+
+<div [ngbNavOutlet]="nav" class="mt-2"></div>
