@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-import { AngularFireAuth } from '@angular/fire/compat/auth';
 
 import { AuthService } from '../../services/auth.service';
 
@@ -9,13 +8,7 @@ import { AuthService } from '../../services/auth.service';
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent {
-  user: any;
-
-  constructor(
-    private authService: AuthService,
-    private au: AngularFireAuth
-  ){
-  }
+  constructor(private authService: AuthService){}
 
   login(){
     return this.authService.login();

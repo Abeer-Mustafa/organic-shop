@@ -26,6 +26,7 @@ import { AdminOrdersComponent } from './pages/admin/admin-orders/admin-orders.co
 import { LoginComponent } from './pages/login/login.component';
 import { AuthGuard } from './guards/auth.guard';
 import { LoginGuard } from './guards/login.guard';
+import { AuthService } from './services/auth.service';
 
 @NgModule({
   declarations: [
@@ -67,7 +68,9 @@ import { LoginGuard } from './guards/login.guard';
       {path: 'login', component: LoginComponent, canActivate: []},
     ])
   ],
-  providers: [],
+  providers: [
+    AuthService
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

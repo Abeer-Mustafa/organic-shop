@@ -17,26 +17,19 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class AuthService {
+  user$: Observable<any>;
 
   constructor(
     private router: Router,
     private session: SessionService,
     private route: ActivatedRoute,
     private authFi: AngularFireAuth
-  ){}
+  ){
+    this.user$ = this.authFi.authState;
+  }
 
   login() {
-    return this.GoogleLogin(new GoogleAuthProvider());
-  }
-  logout() {
-    return this.GoogleLogout();
-  }
-
-  // Auth logic to run auth providers
-  GoogleLogin(provider: any) {
-    // const auth = getAuth();
-
-    return signInWithPopup(auth, provider)
+    return signInWithPopup(auth, new GoogleAuthProvider())
     .then((result: any) => {
       // This gives you a Google Access Token. You can use it to access Google APIs.
       let credential = GoogleAuthProvider.credentialFromResult(result);
@@ -51,28 +44,8 @@ export class AuthService {
       console.log(returnUrl);
       this.router.navigate([returnUrl || '/']);
     })
-    .catch((error) => {
-      console.log(error);
-
-      let errorCode = error.code;
-      console.log(errorCode);
-
-      let errorMessage = error.message;
-      console.log(errorMessage);
-
-      // The email of the user's account used.
-      let errorEmail = error.customData.email;
-      console.log(errorEmail);
-
-      // The AuthCredential type that was used.
-      let errorCredential = GoogleAuthProvider.credentialFromError(error);
-      console.log(errorCredential);
-    });
   }
-
-  GoogleLogout() {
-    // const auth = getAuth();
-
+  logout() {
     this.router.navigateByUrl('login');
     return signOut(auth);
   }
