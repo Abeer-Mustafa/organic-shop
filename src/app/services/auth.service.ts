@@ -45,6 +45,7 @@ export class AuthService {
       this.router.navigate([returnUrl || '/']);
     })
   }
+
   logout() {
     this.router.navigateByUrl('login');
     return signOut(auth);
@@ -61,21 +62,6 @@ export class AuthService {
         return false;
       }
     })
-
-    // const auth = getAuth();
-    // const user = auth.currentUser;
-
-    // if (user) {
-    //   let displayName = user.displayName;
-    //   let email = user.email;
-    //   console.log(displayName);
-    //   console.log(email);
-    //   return user;
-    // }
-    // else {
-    //   console.log('User is signed out');
-    //   return null;
-    // }
   }
 
   getUser(){
