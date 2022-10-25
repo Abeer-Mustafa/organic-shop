@@ -10,7 +10,11 @@ import { AngularFireAuth } from '@angular/fire/compat/auth';
   styleUrls: ['./navbar.component.css']
 })
 export class NavbarComponent {
-  constructor(public authService: AuthService){}
+  appUser: User = {};
+  
+  constructor(private authService: AuthService){
+    authService.appUser$.subscribe((appUSer: any) => this.appUser = appUSer);
+  }
 
   logout(){
     return this.authService.logout();

@@ -1,17 +1,19 @@
+import { UserService } from './user.service';
 
 import { Injectable } from '@angular/core';
 import { ActivatedRoute, Route, Router } from '@angular/router';
 
 import { GoogleAuthProvider } from 'firebase/auth';
 import { getAuth, signInWithPopup, signOut } from "firebase/auth";
-import * as firebaseAdmin from 'firebase-admin';
 
 import { auth } from '../../../firebaseConfig';
 import { SessionService } from './session.service';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
 
-// import { User } from "./../interfaces/user";
+import { map, switchMap } from 'rxjs/operators';
+
+import { User } from "./../interfaces/user";
 
 @Injectable({
   providedIn: 'root'
@@ -23,7 +25,8 @@ export class AuthService {
     private router: Router,
     private session: SessionService,
     private route: ActivatedRoute,
-    private authFi: AngularFireAuth
+    private authFi: AngularFireAuth,
+    private userService: UserService
   ){
     this.user$ = this.authFi.authState;
   }
@@ -39,6 +42,9 @@ export class AuthService {
 
       // The signed-in user info.
       let user = result?.user;
+
+      // store data
+      this.userService.save(user);
 
       let returnUrl = this.route.snapshot.queryParamMap.get('returnUrl');
       console.log(returnUrl);
@@ -80,4 +86,15 @@ export class AuthService {
       }
     })
   }
+
+  get appUser$():Observable<User | null>{
+    return this.user$
+    .pipe(
+      switchMap(user=> {
+        if(user) return this.userService.get(user.uid).valueChanges();
+        return of(null);
+      })
+    )
+  }
+
 }
