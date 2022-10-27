@@ -1,19 +1,26 @@
-import { UserService } from './services/user.service';
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
+import { RouterModule } from '@angular/router';
+import { FormsModule } from '@angular/forms';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-import { observeInsideAngular } from '@angular/fire/zones';
-import { RouterModule } from '@angular/router';
 
+//DataTable
+import { DataTablesModule } from "angular-datatables";
+
+// bootstrap
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+
+// firebase
 import { AngularFireModule } from '@angular/fire/compat';
 import { AngularFireDatabaseModule } from '@angular/fire/compat/database';
 import { AngularFireAuthModule } from '@angular/fire/compat/auth';
 
+// environment
 import { environment } from '../environments/environment';
 
+// pages
 import { NavbarComponent } from './pages/navbar/navbar.component';
 import { ShoppingCartComponent } from './pages/shopping-cart/shopping-cart.component';
 import { ProfileComponent } from './pages/profile/profile.component';
@@ -25,10 +32,17 @@ import { MyOrdersComponent } from './pages/my-orders/my-orders.component';
 import { AdminProductsComponent } from './pages/admin/admin-products/admin-products.component';
 import { AdminOrdersComponent } from './pages/admin/admin-orders/admin-orders.component';
 import { LoginComponent } from './pages/login/login.component';
+import { ProductFormComponent } from './pages/admin/product-form/product-form.component';
+
+// guards
 import { AuthGuard } from './guards/auth.guard';
 import { LoginGuard } from './guards/login.guard';
-import { AuthService } from './services/auth.service';
 import { AdminGuard } from './guards/admin.guard';
+
+// services
+import { AuthService } from './services/auth.service';
+import { UserService } from './services/user.service';
+import { ProductService } from './services/product.service';
 
 @NgModule({
   declarations: [
@@ -43,13 +57,16 @@ import { AdminGuard } from './guards/admin.guard';
     MyOrdersComponent,
     AdminProductsComponent,
     AdminOrdersComponent,
-    LoginComponent
+    LoginComponent,
+    ProductFormComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     NgbModule,
-
+    FormsModule,
+    
+    DataTablesModule,
     AngularFireModule.initializeApp(environment.firebase),
     AngularFireDatabaseModule,
     AngularFireAuthModule,
@@ -66,6 +83,7 @@ import { AdminGuard } from './guards/admin.guard';
 
       // admin routes
       {path: 'admin/products', component: AdminProductsComponent, canActivate: [AuthGuard, AdminGuard]},
+      {path: 'admin/products/new', component: ProductFormComponent, canActivate: [AuthGuard, AdminGuard]},
       {path: 'admin/orders', component: AdminOrdersComponent, canActivate: [AuthGuard, AdminGuard]},
     ])
   ],
@@ -74,7 +92,8 @@ import { AdminGuard } from './guards/admin.guard';
     AuthGuard,
     LoginGuard,
     UserService,
-    AdminGuard
+    AdminGuard,
+    ProductService
   ],
   bootstrap: [AppComponent]
 })
